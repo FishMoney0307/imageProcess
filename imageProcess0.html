@@ -94,6 +94,7 @@ void main()
     vec3 gray = vec3(dot(color.rgb, lum));
     color.rgb = mix(gray, color.rgb, 1.0 + saturation);
 
+    //didnt even need to look this one up LETS GO
     if (grayscale == 1.0) {
         color.rgb = gray;
     }
