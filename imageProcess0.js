@@ -11,6 +11,7 @@ var warmth = 0.0;
 var brightness = 0.0;
 var contrast = 0.0;
 var invert = 0.0;
+var saturation = 0.0;
 
 var left = -2;           // left limit of world coords
 var right = 2;           // right limit of world coords
@@ -104,7 +105,15 @@ document.getElementById("Contrast").oninput = function () {
 };
 
 document.getElementById("Invert").oninput = function () {
-    invert = ((invert + 1) % 2); //tried to do this on one line for simplicity
+    invert = ((invert + 1) % 2); 
+    //flips the checkbox between 1 and 0
+    //tried to do this on one line for simplicity
+    //i dont like it but it works
+}
+
+document.getElementById("Saturation").oninput = function () {
+    //adjusted cause it didnt feel saturated enough
+    saturation = (event.srcElement.value / 64) * .5;
 }
 
 // Callback function for keydown events, rgeisters function dealWithKeyboard
@@ -165,11 +174,13 @@ function render() {
     var warmthLoc = gl.getUniformLocation(program, 'warmth');
     var contrastLoc = gl.getUniformLocation(program, 'contrast');
     var invertLoc = gl.getUniformLocation(program, 'invert');
+    var saturationLoc = gl.getUniformLocation(program, 'saturation');
 
     gl.uniform1f(brightnessLoc, brightness);
     gl.uniform1f(warmthLoc, warmth);
     gl.uniform1f(contrastLoc, contrast);
     gl.uniform1f(invertLoc, invert);
+    gl.uniform1f(saturationLoc, saturation);
 
     gl.drawArrays(gl.TRIANGLES, 0, 6);         // Draw two triangles using the TRIANGLES primitive using 6 vertices
     requestAnimationFrame(render);                                  // swap buffers, continue render loop
