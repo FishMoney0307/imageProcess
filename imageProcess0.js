@@ -12,6 +12,7 @@ var brightness = 0.0;
 var contrast = 0.0;
 var invert = 0.0;
 var saturation = 0.0;
+var grayscale = 0.0;
 
 var left = -2;           // left limit of world coords
 var right = 2;           // right limit of world coords
@@ -116,6 +117,10 @@ document.getElementById("Saturation").oninput = function () {
     saturation = (event.srcElement.value / 64) * .5;
 }
 
+document.getElementById("Grayscale").oninput = function () {
+    grayscale = ((grayscale +1) % 2);
+}
+
 // Callback function for keydown events, rgeisters function dealWithKeyboard
 window.addEventListener("keydown", dealWithKeyboard, false);
 
@@ -175,12 +180,14 @@ function render() {
     var contrastLoc = gl.getUniformLocation(program, 'contrast');
     var invertLoc = gl.getUniformLocation(program, 'invert');
     var saturationLoc = gl.getUniformLocation(program, 'saturation');
+    var grayscaleLoc = gl.getUniformLocation(program, 'grayscale');
 
     gl.uniform1f(brightnessLoc, brightness);
     gl.uniform1f(warmthLoc, warmth);
     gl.uniform1f(contrastLoc, contrast);
     gl.uniform1f(invertLoc, invert);
     gl.uniform1f(saturationLoc, saturation);
+    gl.uniform1f(grayscaleLoc, grayscale);
 
     gl.drawArrays(gl.TRIANGLES, 0, 6);         // Draw two triangles using the TRIANGLES primitive using 6 vertices
     requestAnimationFrame(render);                                  // swap buffers, continue render loop
