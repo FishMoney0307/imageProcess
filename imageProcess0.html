@@ -19,6 +19,9 @@ Brightness -2 <input id="Brightness" type="range" min="-128" max="128" step="1" 
 <div>
 Contrast -2 <input id="Contrast" type="range" min="-128" max="128" step="1" value="0" /> 2
 </div>
+<div>
+Invert <input id="Invert" type="checkbox" value="check" />
+</div>
 
 
 <script id="vertex-shader" type="x-shader/x-vertex">
@@ -49,6 +52,7 @@ uniform sampler2D texMap;
 uniform float warmth;
 uniform float brightness;
 uniform float contrast;
+uniform float invert;
 
 void main()
 {
@@ -60,6 +64,8 @@ void main()
     color.rgb += brightness;
 
     color.rgb = 0.5 + (1.0 + contrast) * (color.rgb - 0.5);
+
+    if (invert == 1.0) { color.rgb = 1.0 - color.rgb; }
 
     fColor = color;
 }
