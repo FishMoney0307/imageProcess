@@ -9,6 +9,7 @@ var aspect;
 
 var warmth = 0.0;
 var brightness = 0.0;
+var contrast = 0.0;
 
 var left = -2;           // left limit of world coords
 var right = 2;           // right limit of world coords
@@ -97,6 +98,10 @@ document.getElementById("Brightness").oninput = function () {
     brightness = (event.srcElement.value / 128) * .5;
 };
 
+document.getElementById("Contrast").oninput = function () {
+    contrast = (event.srcElement.value / 128) * .5;
+};
+
 // Callback function for keydown events, rgeisters function dealWithKeyboard
 window.addEventListener("keydown", dealWithKeyboard, false);
 
@@ -153,9 +158,11 @@ function render() {
 
     var brightnessLoc = gl.getUniformLocation(program, 'brightness');
     var warmthLoc = gl.getUniformLocation(program, 'warmth');
+    var contrastLoc = gl.getUniformLocation(program, 'contrast');
 
     gl.uniform1f(brightnessLoc, brightness);
     gl.uniform1f(warmthLoc, warmth);
+    gl.uniform1f(contrastLoc, contrast);
 
     gl.drawArrays(gl.TRIANGLES, 0, 6);         // Draw two triangles using the TRIANGLES primitive using 6 vertices
     requestAnimationFrame(render);                                  // swap buffers, continue render loop
